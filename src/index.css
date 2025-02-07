@@ -247,10 +247,12 @@ body{
     .Products{
         display: grid;
         grid-template-columns: repeat(2,1fr);
-        gap: 3px;
+        gap: 10px;
     }
     .cardProduct {
-        width: 180px;     
+        width: 170px; 
+        border: none;
+          
     }
     .hide-mobile {
       display: none;
@@ -278,8 +280,8 @@ body{
 
     .Products{
         display: grid;
-        grid-template-columns: repeat(3 , 1fr);
-        gap: 2px;
+        grid-template-columns: repeat(2 , 1fr);
+        gap: 13px;
     }
     .hide-mobile {
       display: none;

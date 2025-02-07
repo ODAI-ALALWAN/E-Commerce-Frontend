@@ -16,7 +16,7 @@ export const Auth_Login = createAsyncThunk ( 'auth/Auth_Login' , async (info , {
     }
 })
 
-export const LOG_OUT = createAsyncThunk ('auth/LOG_OUT' , async () => {
+export const LOG_OUT = createAsyncThunk ('auth/LOG_OUT' , async (_, { dispatch }) => {
     try {
         await baseUrl.get('api/v1/auth/logOut',{headers:{
             Authorization: 'Token' 
@@ -55,6 +55,7 @@ export const AuthUserSlice = createSlice({
         isLogin : false ,      
         role : '',
         userName : '',
+        userId : ' ',
         token : ''
     },
     reducers:{
@@ -66,6 +67,7 @@ export const AuthUserSlice = createSlice({
             state.token = action.payload.token;
             state.role = action.payload.role
             state.userName = action.payload.name
+            state.userId =action.payload._id
             
         }
         
@@ -85,6 +87,7 @@ export const AuthUserSlice = createSlice({
             state.role = payload.data.role
             state.userName = payload.data.name
             state.token = payload.data.token
+            state.userId = payload.data._id
 
             
         })

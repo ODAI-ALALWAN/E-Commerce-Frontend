@@ -1,68 +1,36 @@
-//import React, { useEffect } from 'react'
+
+import React, { useEffect } from 'react'
+import { useSelector , useDispatch } from 'react-redux'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import Mobile from '../../assets/9.webp'
-import Television from '../../assets/10.webp'
-import Home  from '../../assets/11.webp'
-import SmartWatch from '../../assets/14.webp'
+import { GET_Categroy } from '../../rtk/slices/Categroy-slice'
+import Lodaing from '../../ui/Lodaing'
 
 
-// import { useSelector , useDispatch } from 'react-redux'
 
-// import { getCategroy } from '../../rtk/slices/Categroy-slice'
 
 export default function Categroy() {
 
-  // const categroy = useSelector((state) => state.categories.data)
-  // const dispatch = useDispatch()
+  const { data : categroy , loading  } = useSelector((state) => state.categroy)
+  const dispatch = useDispatch()
+  
 
   
 
-  // useEffect (() => {
-  //   dispatch(getCategroy())
-  // },[dispatch])
+  useEffect (() => {
+    dispatch(GET_Categroy())
+  },[dispatch])
   
-  const image = [
-    {name : "Mobile" ,
-     img : Mobile
-    },
-    {name : "Television" ,
-      img : Television
-    },
-    {name : "Home" ,
-      img : Home
-    },
-    {name : "SmartWatch" ,
-      img : SmartWatch
-    },
-    {name : "Mobile" ,
-      img : Mobile
-     },
-     {name : "Television" ,
-       img : Television
-     },
-     {name : "Home" ,
-       img : Home
-     },
-     {name : "SmartWatch" ,
-       img : SmartWatch
-     },
-   
-
-    
-  ]
-
-
 
 
   const responsive = {
     superLargeDesktop: {
         breakpoint: { max: 4000, min: 3000 },
-        items: 6
+        items: 4
     },
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
-        items: 5
+        items: 4
     },
     tablet: {
         breakpoint: { max: 1024, min: 464 },
@@ -78,6 +46,9 @@ export default function Categroy() {
   },
   }
 
+
+  if(loading) return  <div className='container mt-4 '><Lodaing/></div>
+
   return (
     <div className='w-full  m-1  md-lg:mt-1  sm:w-[100%]' >
         <div className='w-[85%] lg:w-[90%] mx-auto mt-5 cursor-pointer' >
@@ -85,7 +56,7 @@ export default function Categroy() {
             <div className='w-full' >
               <div className='my-3'>
                {
-                 image ? ( 
+                 categroy ? ( 
                 <Carousel 
                 autoPlay={true}
                 infinite={true}
@@ -97,10 +68,10 @@ export default function Categroy() {
                 >
                 {
                
-                  image.map((ele , i) => 
+                  categroy.map((ele , i) => 
                     <div key={i} className='flex justify-center items-center flex-col gap-[5px] '>
-                          <img  src={ele.img} alt={ele.img} className='bg-[#eee] flex justify-center items-center
-                           p-1 rounded-[50%] w-[150px] md:w-[100px] ' />
+                          <img  src={ele.image} alt={ele.image} className='bg-[#eee] flex justify-center items-center
+                           p-1 rounded-[50%] w-[150px] md:w-[100px] object-cover  ' />
                           <span>{ele.name}</span>
                     </div>
                   

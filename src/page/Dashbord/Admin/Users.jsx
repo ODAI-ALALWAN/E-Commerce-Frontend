@@ -73,8 +73,8 @@ export default function Users() {
                 <td>{el.email}</td>
                 <td>{el.role}</td>
                 <td>{el.active ? "active" : "deactive" }</td>
-                <td className='flex justify-start items-center gap-2 text-2xl' >
-                  <MdDelete className='text-red-400'/>
+                <td className='' >
+                  {el.role === "admin" ? null :  <MdDelete className='text-red-400 '/>}
                 </td>
               </tr>
 

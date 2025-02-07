@@ -24,7 +24,7 @@ export const AdminOrderSlice = createSlice ({
         error: null
     },
     reducers:{
-
+        
     },
     extraReducers : (builder) => {
         builder.addCase(GET_All_Order.pending , (state , { payload }) => {
@@ -37,7 +37,6 @@ export const AdminOrderSlice = createSlice ({
         builder.addCase(GET_All_Order.fulfilled , (state , {payload}) => {
             state.loader = false
             state.data = payload.data || payload;
-
            
         })
 

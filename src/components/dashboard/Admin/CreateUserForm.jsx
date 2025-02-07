@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ModalContext } from '../../../ui/Model';
 
 export default function CreateUserForm() {
+
+   const { close } = useContext(ModalContext);
+
   return (
     <div>
         <div className=' md:text-sm flex flex-col justify-center items-center gap-2 md:gap-[2px] ' >
@@ -31,8 +35,26 @@ export default function CreateUserForm() {
                 <option value={'manager'} >manager</option>
               </select>
             </div>
-            
+
+
+            <div className='flex flex-row gap-3'>
+
+
             <button className='bg-sky-500 hover:bg-sky-700 w-[100px] rounded-md p-2 text-white text-l mt-10 md:mt-5 mb-5' >Create </button>
+            <button
+              className="bg-red-400 hover:bg-red-600 w-[100px] rounded-md p-2 text-white text-l mt-10 md:mt-5 mb-5 "
+              onClick={close}
+            >
+              Cancel
+            </button>
+
+
+
+
+
+
+          </div>
+
         </div>
     </div>
   )

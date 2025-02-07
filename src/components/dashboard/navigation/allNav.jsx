@@ -5,6 +5,7 @@ import { BiSolidCoupon } from "react-icons/bi";
 import { BiSolidCategory } from "react-icons/bi";
 import { ImProfile } from "react-icons/im";
 import { HiViewGridAdd } from "react-icons/hi";
+import { PiSlideshowBold } from "react-icons/pi";
 
 
 export const allLink = [
@@ -63,6 +64,13 @@ export const allLink = [
     role : 'user',
     Icon : <ImProfile />,
     title : "Profile"
+    },
+    {
+    id : 8,
+    path : 'Admin/Baaner',
+    role : 'admin',
+    Icon : <PiSlideshowBold />,
+    title : "Banner"
     },
 
 

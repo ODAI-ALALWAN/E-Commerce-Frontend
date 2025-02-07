@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Reting } from "./Reting";
 import { FaStar } from "react-icons/fa";
+import { IoMdSend } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { Get_Review_By_Id } from "../../../rtk/slices/ReviewSlice";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 export default function ReviewProduct() {
-    const [isOpen ] = useState(false)
-    const [isCollapsed , setIsCollapsed] = useState(true)
-
-   
-
-
-  const ReviewArry = [
-    { id: 1, name: "user 1", comment: "very nice" , reting : 5 },
-    { id: 2, name: "user 2", comment: "nice" , reting : 4 },
-    { id: 3, name: "user 3", comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat!",reting : 4 },
-    { id: 4, name: "user 4", comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat" , reting : 3 },
-    { id: 1, name: "user 1", comment: "very nice" , reting : 5 },
-    { id: 2, name: "user 2", comment: "nice" , reting : 4 },
-    { id: 3, name: "user 3", comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat!",reting : 4 },
-    { id: 4, name: "user 4", comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat" , reting : 3 },
-  ];
+  const { id } = useParams()
+  const { data : reviews  } = useSelector((state) => state.review);
+  const dispatch = useDispatch();
 
 
 
-  const displayItems = isCollapsed ? ReviewArry.slice(0,3) : ReviewArry ;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(Get_Review_By_Id(id));
+      } catch (error) {
+        toast.error("Something went wrong, please try again!");
+      }
+    };
+
+    fetchData();
+  }, [dispatch, id]);
+  
+  const [isOpen ] = useState(false)
+  const [isCollapsed , setIsCollapsed] = useState(true)
+
+  const displayItems = isCollapsed ? reviews?.slice(0,3) : reviews ;
 
 
 
@@ -78,33 +85,44 @@ export default function ReviewProduct() {
 
         {/* Reviews section */}
         <div className="w-full  ">
-          <h5 className="m-3">{ReviewArry.length} Reviews</h5>
+          <h5 className="m-3 font-extralight flex justify-center ">{reviews?.length} Reviews</h5>
           {
-            displayItems.length > 0 ?
+            displayItems.length >= 0 ?
             
             !isOpen  &&  displayItems.map((ele) => {
                 return (
-                    <div key={ele.id} className=" border-b border-[#000] px-2 py-1 ">
-                    <Reting reting={ele.reting} />
+                    <div key={ele._id} className=" border-b border-[#000] px-2 py-1 ">
+                    <Reting reting={ele.ratings} />
                     <div className="flex items-center justify-between">
-                      <span>{ele.name}</span>
-                      <span className=" font-extralight ">12-12-2020</span>
+                      <span className="font-semibold" >{ele.user.name}</span>
+                      <span className=" font-extralight ">{new Intl.DateTimeFormat('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                          }).format(new Date(ele.createdAt))} </span>
                     </div>
-                    <p className="font-light">
-                      {ele.comment}
+                    <p className=" font-extralight ">
+                      {ele.title}
                     </p>
                   </div>
 
                 )
             }) 
             
-           : <span> there is no comment </span>
+           : <span className=" font-extralight flex justify-center "> There is no Review </span>
 
           }
-         
+
+          <div className="flex flex-col gap-2 mt-5  relative " >
+            <IoMdSend className=" absolute right-2 top-5 cursor-pointer "/>
+            <input type="text" placeholder="comment ..." required name="title" id="title" className="bg-[#eee] rounded-md  p-3 "/>
+          </div>
+
+          {reviews.length >= 4 && 
           <button onClick={() => setIsCollapsed((isCollapsed) => !isCollapsed)} className="text-l m-3 mt-10  flex items-center justify-center gap-2 rounded-md bg-sky-500 p-2 text-white hover:bg-sky-700 md:mt-4">
-            {isCollapsed ? `Show all ${ReviewArry.length}` : "Show less "}
+            { isCollapsed ? `Show all ${reviews?.length}` : "Show less "}
           </button>
+          }
         </div>
       </div>
     </section>

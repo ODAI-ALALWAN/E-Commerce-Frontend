@@ -1,7 +1,7 @@
 
 import { IoImageOutline } from "react-icons/io5";
 import { IoImagesOutline } from "react-icons/io5";
-
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 import toast from "react-hot-toast";
 import {  useEffect, useState } from "react"
@@ -118,6 +118,7 @@ export default function AddProducts() {
     for (let i = 0; i < images.length; i++) {
       formData.append('images', images[i]);
     }
+
     
     dispatch(Add_Product(formData))
     .unwrap() 
@@ -180,38 +181,68 @@ export default function AddProducts() {
                       <textarea type="text" required name="description" id="description" placeholder="Description Product ..."  className="bg-[#eee]  rounded-md p-3 "  value={state.description} onChange={inputHandel}  />
                     </div>
 
-                    <div className="flex flex-col gap-2 mt-7 p-2 m-2  cursor-pointer border-2 rounded-md border-[#ddd] " >
+
+
+
+                    <div className="w-full">
+                        <div className="flex flex-col gap-2 m-2 " >
+                          <label htmlFor="quantity" >Quantity</label>
+                          <input type="number" placeholder="Quantity.." required name="quantity" id="quantity" className=" bg-[#eee] rounded-md  p-3 " value={state.quantity}   onChange={inputHandel}   />
+                        </div>
+                        <div className="flex flex-col gap-2 m-2 " >
+                          <label htmlFor="price" >Price</label>
+                          <input type="number" placeholder="Price.." required name="price" id="price" className="bg-[#eee]  rounded-md  p-3 "  value={state.price} onChange={inputHandel} />
+                        </div>
+                    </div>
+
+
+                <div className="flex flex-col gap-2 mt-7 p-2 m-2  cursor-pointer border-2 rounded-md border-[#ddd] " >
                       <label htmlFor="imageCover" className="flex justify-center items-center flex-col" >
                       <span  > Slecet Image Cover </span>
                       <IoImageOutline className="w-[100px]  h-[100px] to-blue-500  cursor-pointer  opacity-[0.9] "/> 
                       </label>
                       <input type="file"  onChange={handleImageCoverChange} required name="imageCover" id="imageCover" className="bg-[#eee]  rounded-md p-1 hidden "  accept='image/*'    />
-                    </div>
+                </div>
 
-                    <div className="flex flex-col gap-2 mt-7 p-2 m-2  cursor-pointer border-2 rounded-md border-[#ddd] " >
+                <div className="flex flex-col gap-2 mt-7 p-2 m-2  cursor-pointer border-2 rounded-md border-[#ddd] " >
                       <label htmlFor="images" className="flex justify-center items-center flex-col" >
                       <span  > Slecet Images</span>
                       <IoImagesOutline className="w-[100px]  h-[100px] to-blue-500  cursor-pointer  opacity-[0.9] "/> 
                       </label>
                       <input multiple type="file" onChange={imageHandle}  required name="images" id="images" className="bg-[#eee]  rounded-md p-1 hidden "  accept='image/*'    />
-                    </div>
+                </div>
 
-                    <div className="flex justify-center gap-3 flex-col  ">
-                    {imageCoverShow &&  <div  className="w-[200px] h-[200px]  " >
-                          <label htmlFor={imageCoverShow}>
-                            <img src={imageCoverShow} alt=""  className="w-[200px] h-[200px]" />
-                          </label>
-                      </div> }
-                   {imageShow.map((img,i) => {
-                    return(
-                      <div key={i} className="w-[200px] h-[200px]  " >
-                          <label htmlFor={i}>
-                            <img src={img.url} alt=""  className="w-[200px] h-[200px]" />
-                          </label>
-                      </div>
-                    )
-                   })}
+                    <div className="flex justify-center gap-3 flex-row  ">
                     
+                    {imageCoverShow && (
+                        <div className="relative w-[200px] h-[210px]">
+                          <img src={imageCoverShow} alt="Cover Preview" className="w-full h-full object-cover p-10" />
+                          <button
+                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+                            onClick={() => setimageCoverShow(null)}
+                          >
+                            <IoMdCloseCircleOutline/>
+                          </button>
+                        </div>
+                      )}
+
+
+
+
+
+                    {imageShow.map((img, i) => (
+                        <div key={img.url || i} className="relative w-[200px] h-[220px]">
+                          <img src={img.url} alt={`Preview ${i}`} className="w-full h-full object-cover p-10" />
+                          <button
+                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+                            onClick={() =>
+                              setImageShow((prev) => prev.filter((_, index) => index !== i))
+                            }
+                          >
+                            <IoMdCloseCircleOutline/>
+                          </button>
+                        </div>
+                      ))}
                       
                 
                     </div>
@@ -224,17 +255,7 @@ export default function AddProducts() {
 
 
             
-                <div className="w-full">
-                  <div className="flex flex-col gap-2 m-2 " >
-                    <label htmlFor="quantity" >Quantity</label>
-                    <input type="number" placeholder="Quantity.." required name="quantity" id="quantity" className=" bg-[#eee] rounded-md  p-3 " value={state.quantity}   onChange={inputHandel}   />
-                  </div>
-                  <div className="flex flex-col gap-2 m-2 " >
-                    <label htmlFor="price" >Price</label>
-                    <input type="number" placeholder="Price.." required name="price" id="price" className="bg-[#eee]  rounded-md  p-3 "  value={state.price} onChange={inputHandel} />
-                  </div>
-
-                </div>
+                
           
               </div>
               <button type='submit' className="text-l mt-10 py-2 px-10 bg-sky-400 rounded-md md:mt-4 " disabled={loading}>

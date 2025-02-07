@@ -3,25 +3,33 @@
 import { Link } from 'react-router-dom'
 import CardProduct from './CardProduct'
 import Carousel from 'react-multi-carousel'
-import Imag from '../../../assets/IPHONE132.jpg'
-import Imag1 from '../../../assets/jack.jpg'
+import { useDispatch, useSelector } from 'react-redux';
+import { Get_Product } from '../../../rtk/slices/Product-slice';
+import toast from 'react-hot-toast';
+import { useEffect } from 'react';
+import Lodaing from '../../../ui/Lodaing';
 
 
-export default function ContinerProduct({disc , title , btn  }) {
 
-    const arr = [
-        Imag,
-        Imag,
-        Imag1,
-        Imag,
-        Imag1,
-        Imag1,
-        Imag1,
-        Imag,
-        Imag,
-        Imag,
-        Imag,
-    ]
+export default function ContinerProduct({  title , btn  }) {
+
+    const { data , loader } = useSelector((state) => state.products);
+    const dispatch = useDispatch();
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          await dispatch(Get_Product());
+        } catch (error) {
+          toast.error("Something went wrong, please try again!");
+        }
+      };
+  
+      fetchData();
+    }, [dispatch]);
+
+
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -54,7 +62,7 @@ export default function ContinerProduct({disc , title , btn  }) {
       }
 
 
-
+  if (loader) return <div className="container mt-4"><Lodaing /></div>;
   return (
     <>
     <div className='container w-full  m-1 px-1 md-lg:mt-1 sm:w-[100%]'>
@@ -72,9 +80,9 @@ export default function ContinerProduct({disc , title , btn  }) {
         responsive={responsive}
         
         >
-        {arr.map((ele , i) =>  {
+        {data.map((ele , i) =>  {
             return (
-                <CardProduct key={i} ProductImag={ele} price={299} reting={4} disc={disc} />
+                <CardProduct key={ele._id} data={ele} />
             )
         })}
     

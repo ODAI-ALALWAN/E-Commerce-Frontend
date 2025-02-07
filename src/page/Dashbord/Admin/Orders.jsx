@@ -9,7 +9,7 @@ import { GET_All_Order } from "../../../rtk/slices/OrderAdmin-slice";
 
 export default function Orders(){
 
-  const {data, loader}    = useSelector((state) => state.adminOrder)
+  const {data, loader} = useSelector((state) => state.adminOrder)
 
   const dispatch  = useDispatch()
 
@@ -28,6 +28,7 @@ export default function Orders(){
 
 
   if(loader) return <div className='containers mt-4 '><Lodaing/></div>  
+
 
 
   return (

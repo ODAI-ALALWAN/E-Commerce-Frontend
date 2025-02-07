@@ -43,14 +43,18 @@ export default function Login() {
         toPage(`${role === "admin" ? "/Dashbord/Admin/Main" : "/"}`);
       }, 2000);
     }
-  }, [successMessage, errorMessage, dispatch, role, toPage, isLogin]);
+  }, [dispatch, role, toPage, isLogin,]);
 
   return (
+
+
     <div className=" grid  h-[100vh] grid-cols-[50%_50%]  items-center justify-center gap-10 overflow-hidden md:flex ">
       <div className="landing z-[-1] flex h-[500px] w-[500px]  items-center justify-center bg-[#eee] md:hidden ">
         <img src={shopImg} alt="" className=" z-[-1]  " />
       </div>
-      <div className="m-4 flex items-center justify-center p-4">
+      <div className="m-4 flex flex-col items-center justify-center p-4">
+      <div className="text-center text-sm bg-slate-500 mb-2 p-2 flex flex-col gap-1 rounded-md" ><span>Log in as a user or admin</span> <span> user@outlook.com </span> <span> admin@outlook.com </span>  <span> password : 123456 </span>  </div>
+
         <form
           onSubmit={submit}
           className="z-[1] flex h-[400px] w-[400px] flex-col  items-center justify-center gap-2 rounded-lg bg-[rgb(238,238,238)] shadow-xl md:h-[350px] md:w-[350px] md:text-sm"
@@ -103,5 +107,6 @@ export default function Login() {
         </form>
       </div>
     </div>
+
   );
 }

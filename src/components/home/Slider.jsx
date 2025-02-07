@@ -1,17 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import img1 from '../../assets/4.jpg'
-import img2 from '../../assets/5.jpg'
-import img3 from '../../assets/6.jpg'
+import { Link } from "react-router-dom"
+import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { GET_Banner } from '../../rtk/slices/Banner'
+import Lodaing from '../../ui/Lodaing'
 
 export default function Slider() {
 
-    const arry = [
-        img1,
-        img2,
-        img3
-    ]
+    const { data : bannerDate , loader : bannerLoader } = useSelector((state) => state.banner);
+
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        const fatchData = async () => {
+          try {
+            dispatch(GET_Banner())
+        } catch (error) {
+          toast.error("somthing is error try again!")
+        }
+    
+        }
+        fatchData()
+      },[dispatch]);
+
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -31,9 +46,11 @@ export default function Slider() {
         },
     }
 
+    if (bannerLoader) return <div className='container mt-4 '><Lodaing/></div>
+
   return (
-    <div className='container w-full m-1  md-lg:mt-1 ' >
-        <div className='w-[85%] lg:w-[90%] mx-auto sm:w-[100%] ' >
+    <div className='container w-full m-1  md-lg:mt-1 mb-4 ' >
+        <div className='w-[85%] lg:w-[90%] mx-auto sm:w-[100%] cursor-pointer  ' >
             <Carousel 
              autoPlay={true}
              infinite={true}
@@ -41,10 +58,11 @@ export default function Slider() {
              showDots={true}
              responsive={responsive}
              >
-            {arry.map((ele , i ) => 
-                <img key={i} src={ele} alt={ele} />
+            {bannerDate.map((ele ) => 
+                <Link key={ele._id} to={ele.productId?._id} >
+                <img  src={ele.image} alt={ele.image} className='h-[300px] mb-10 w-full  sm:h-[100px] rounded-md ' />
+                </Link>
             )
-
             }
 
              </Carousel>

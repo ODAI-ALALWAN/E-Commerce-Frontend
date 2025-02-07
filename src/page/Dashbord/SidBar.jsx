@@ -33,7 +33,7 @@ export default function SidBar() {
               : { color: '#131212'}
             }
           >
-           <div className={`flex flex-row cursor-pointer items-center gap-3 text-base m-2 `}>
+           <div className={`flex flex-row cursor-pointer items-center gap-3 text-base m-2 border-b-2 shadow-md `}>
             <span>{el.Icon}</span>
             <span className="hide-mobile text-base text-nowrap " >{el.title}</span>
           </div>

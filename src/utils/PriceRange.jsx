@@ -1,7 +1,10 @@
 import { useState } from "react"
 import {Range} from "react-range"
+import { useSelector } from "react-redux"
 export default function PriceRange() {
-    const [state , setState] = useState({values : [100 , 2000]})
+  const { data } = useSelector((state) => state.products)
+  const [state , setState] = useState({values : [100 , 2000]})
+
   return (
     <>
      <h2 className='mb-2 font-bold mt-4' >Price</h2>
