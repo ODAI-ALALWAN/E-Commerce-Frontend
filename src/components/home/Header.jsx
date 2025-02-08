@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import { GiShoppingCart } from "react-icons/gi";
 import { CiShop } from "react-icons/ci";
+import { IoIosLogOut } from "react-icons/io";
 import toast from "react-hot-toast";
 import { GETLogged_User_ProductCart } from "../../rtk/slices/Cart-slice";
 
@@ -111,7 +112,7 @@ export default function Header() {
                         >
                           <li className="mb-4 flex flex-col items-center justify-between text-white" onClick={toggleSidebar} >
                           {" "}
-                          {role === "admin" ? "Dashboard" : "profile"}{" "}
+                          {role === "admin" ? "Dashboard" : "Profile" }{" "}
                           </li>
                   </Link>
                   <li className="mb-4 flex flex-col items-center justify-between text-white cursor-pointer"
@@ -119,7 +120,8 @@ export default function Header() {
                       HandelLogout();
                       toggleSidebar();
                     }}  >               
-                        logout
+                       <span className="mx-3 text-sm font-light">Logout</span>
+                        <IoIosLogOut className="text-[1.5rem]" />
                   </li>
                 
                 
@@ -140,7 +142,7 @@ export default function Header() {
                       onClick={toggleSidebar}
                     >
                       <span className="mx-3 text-nowrap text-sm font-light text-white">
-                        WASHLIST
+                        WISHLIST
                       </span>
                       <FaHeart className="mt-1 text-[1.5rem] text-[#4D869C] " />
                     </li>
@@ -163,7 +165,6 @@ export default function Header() {
                   <GiShoppingCart />
                   <span className="absolute -right-[9px] -top-[9px] flex h-[5px] w-[5px] items-center justify-center rounded-full bg-[#eee] p-2 text-[0.5rem] font-light text-[#4D869C]">
                     {isLogin ? numOfCartItems : 0}
-                   
                   </span>
                 </li>
               </Link>
@@ -193,11 +194,11 @@ export default function Header() {
                           }
                         >
                           {" "}
-                          {role === "admin" ? "Dashboard" : "profile"}{" "}
+                          {role === "admin" ? "Dashboard" : "Profile"}{" "}
                         </Link>
                       </span>
                       <span className="cursor-pointer" onClick={HandelLogout}  >
-                        logout
+                        Logout 
                       </span>
                     </div>
                   )}

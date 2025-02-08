@@ -59,6 +59,7 @@ export default function CardProduct({ data }) {
       })
       .catch((error) => {
         toast.error("Something is wrong");
+        console.log(error)
       });
     }else if (!isLogin){
       toast("Please log in first", { duration: 6000 });

@@ -2,14 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { baseUrl } from "../../services/Api";
 
 
-const token = localStorage.getItem("Token");
 
 
 export const Add_ToWishList = createAsyncThunk(
     "wishList/Add_ToCart",
     async ({ productId }, { rejectWithValue }) => {
         try {
-
+            const token = localStorage.getItem("Token")
             if (!token) throw new Error("User is not authenticated");
 
             const { data } = await baseUrl.post(
@@ -35,6 +34,7 @@ export const GETLogged_User_Wishlist = createAsyncThunk(
   "wishList/GETLogged_User_Wishlist",
   async (_, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("Token")
       const { data } = await baseUrl.get('api/v1/wishlist', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -50,6 +50,7 @@ export const Remove_Item_From_WishList = createAsyncThunk(
   "wishList/Remove_Item_From_WishList",
   async (ItemId, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("Token")
       await baseUrl.delete(`api/v1/wishlist/${ItemId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
